@@ -28,6 +28,19 @@ export default function OnboardingPage() {
   };
 
   const handleGetStarted = () => {
+    // 👇 ADD THIS BLOCK
+    // Check if the electronAPI is exposed on the window object
+    if (window.electronAPI) {
+      // Send the signal to the main process to set the flag
+      window.electronAPI.setOnboardingComplete();
+    } else {
+      // Log a warning if the API isn't found
+      console.warn(
+        "window.electronAPI is not available. Ensure the preload script is correctly configured."
+      );
+    }
+
+    // Navigate to the main app route
     navigate(defaultHomeRoute);
   };
 

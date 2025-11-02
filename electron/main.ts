@@ -1,3 +1,4 @@
+import { defaultHomeRoute } from "@/routes";
 import { app, BrowserWindow, ipcMain } from "electron"; // 1. Import ipcMain
 import Store from "electron-store"; // 2. Import electron-store
 import path from "node:path";
@@ -35,6 +36,8 @@ function createWindow() {
     icon: path.join(process.env.VITE_PUBLIC, "electron-vite.svg"),
     width: 1200,
     height: 1200,
+    minWidth: 500,
+    minHeight: 500,
     webPreferences: {
       preload: path.join(__dirname, "preload.mjs"),
       // Note: contextIsolation and sandbox are true by default and recommended.
@@ -62,7 +65,7 @@ function createWindow() {
   } else {
     // For production, use the 'hash' option in loadFile
     win.loadFile(path.join(RENDERER_DIST, "index.html"), {
-      hash: hasOnboarded ? undefined : "onboarding", // This will append '#/onboarding'
+      hash: hasOnboarded ? defaultHomeRoute : "onboarding", // This will append '#/onboarding'
     });
   }
   // --- END OF ONBOARDING LOGIC ---
