@@ -5,7 +5,7 @@ import { useTheme } from "@/providers/theme-provider";
 export function SecondPage() {
   const navigate = useNavigate();
 
-  const { theme, setTheme } = useTheme();
+  const { setTheme } = useTheme();
 
   return (
     <div style={{ textAlign: "center" }}>
