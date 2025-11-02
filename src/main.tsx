@@ -11,7 +11,10 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   </React.StrictMode>
 );
 
-// Use contextBridge
+// Listen to messages from main process
 window.ipcRenderer.on("main-process-message", (_event, message) => {
-  console.log(message);
+  console.log("Message from main process:", message);
 });
+
+// Example of sending message to main process
+window.ipcRenderer.send("renderer-message", "Hello from React!");
