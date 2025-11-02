@@ -1,6 +1,7 @@
 import { Navbar } from "@/components/nabar";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { defaultHomeRoute } from "@/routes";
 import { CheckCircle2, TrendingDown, Target, BarChart3 } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -24,7 +25,7 @@ export default function Home() {
             </p>
             <div className="mt-10 flex items-center justify-center gap-4">
               <Button size="lg" className="text-base" asChild>
-                <Link to="/habits/create">Start Your Journey</Link>
+                <Link to={defaultHomeRoute}>Start Your Journey</Link>
               </Button>
               <Button
                 size="lg"
@@ -145,7 +146,7 @@ export default function Home() {
                 className="text-base"
                 asChild
               >
-                <Link to="/habits/create">Get Started Free</Link>
+                <Link to={defaultHomeRoute}>Get Started Free</Link>
               </Button>
             </div>
           </div>

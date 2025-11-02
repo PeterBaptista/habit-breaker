@@ -6,6 +6,7 @@ import { OnboardingStep1 } from "@/modules/onboarding/step1";
 import { OnboardingStep2 } from "@/modules/onboarding/step2";
 import { OnboardingStep3 } from "@/modules/onboarding/step3";
 import { useNavigate } from "react-router-dom";
+import { defaultHomeRoute } from "@/routes";
 
 export default function OnboardingPage() {
   const navigate = useNavigate();
@@ -27,7 +28,7 @@ export default function OnboardingPage() {
   };
 
   const handleGetStarted = () => {
-    navigate("/habits/create");
+    navigate(defaultHomeRoute);
   };
 
   return (

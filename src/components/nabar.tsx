@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { defaultHomeRoute } from "@/routes";
 
 import { Menu } from "lucide-react";
 import { useState } from "react";
@@ -49,7 +50,7 @@ export function Navbar() {
                 <Link to="/login">Log In</Link>
               </Button>
               <Button asChild>
-                <Link to="/habits/create">Get Started</Link>
+                <Link to={defaultHomeRoute}>Get Started</Link>
               </Button>
             </div>
           </div>
@@ -95,7 +96,7 @@ export function Navbar() {
                   <Link to="/login">Log In</Link>
                 </Button>
                 <Button asChild>
-                  <Link to="/habits/create">Get Started</Link>
+                  <Link to={defaultHomeRoute}>Get Started</Link>
                 </Button>
               </div>
             </div>
