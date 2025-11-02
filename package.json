@@ -35,8 +35,8 @@
     "vite-plugin-electron-renderer": "^0.14.5"
   },
   "build": {
-    "appId": "com.myapp.desktop",
-    "productName": "MyDesktopApp",
+    "appId": "com.habit-tracker.app",
+    "productName": "Habit Tracker",
     "directories": {
       "output": "dist-build",
       "buildResources": "public"
