@@ -5,8 +5,10 @@ import { AnimatePresence } from "framer-motion";
 import { OnboardingStep1 } from "@/modules/onboarding/step1";
 import { OnboardingStep2 } from "@/modules/onboarding/step2";
 import { OnboardingStep3 } from "@/modules/onboarding/step3";
+import { useNavigate } from "react-router-dom";
 
 export default function OnboardingPage() {
+  const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
   const [direction, setDirection] = useState(0);
 
@@ -25,8 +27,7 @@ export default function OnboardingPage() {
   };
 
   const handleGetStarted = () => {
-    // This would typically navigate to the main app
-    console.log("Getting started with Habit Breaker!");
+    navigate("/habits/create");
   };
 
   return (
