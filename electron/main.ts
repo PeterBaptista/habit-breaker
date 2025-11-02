@@ -1,4 +1,4 @@
-import { defaultHomeRoute } from "@/routes";
+import { defaultHomeRoute } from "../src/routes";
 import { app, BrowserWindow, ipcMain } from "electron"; // 1. Import ipcMain
 import Store from "electron-store"; // 2. Import electron-store
 import path from "node:path";
@@ -56,16 +56,23 @@ function createWindow() {
   const hasOnboarded = store.get("hasOnboarded", false);
 
   if (VITE_DEV_SERVER_URL) {
-    let url = VITE_DEV_SERVER_URL;
-    // If not onboarded, append the onboarding hash route
-    if (!hasOnboarded) {
+    let url = VITE_DEV_SERVER_URL; // Explicitly set the hash route based on onboarding status
+
+    // --- FIX IS HERE ---
+    if (hasOnboarded) {
+      // defaultHomeRoute is "/habits", so the hash becomes "#/habits"
+      url += `#${defaultHomeRoute}`;
+    } else {
       url += "#/onboarding";
     }
+    // --- END OF FIX ---
+
     win.loadURL(url);
   } else {
-    // For production, use the 'hash' option in loadFile
+    // Your production logic is already correct.
+    // The 'hash' property correctly appends '#/habits' or '#onboarding'
     win.loadFile(path.join(RENDERER_DIST, "index.html"), {
-      hash: hasOnboarded ? defaultHomeRoute : "onboarding", // This will append '#/onboarding'
+      hash: hasOnboarded ? defaultHomeRoute : "onboarding",
     });
   }
   // --- END OF ONBOARDING LOGIC ---

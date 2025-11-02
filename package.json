@@ -2,7 +2,10 @@
   "name": "habit-breaker",
   "private": true,
   "author": "Pedro Baptista",
-  "version": "0.0.2",
+  "description": "An app to help you break bad habits",
+  "license": "MIT",
+  "repository": "https://github.com/PeterBaptista/habit-breaker",
+  "version": "0.0.3",
   "type": "module",
   "main": "dist-electron/main.js",
   "scripts": {
