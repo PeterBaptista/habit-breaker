@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import Home from "./pages/landing/home/page";
 import { SecondPage } from "./pages/landing/second/page";
 import AppLayout from "./pages/app/layout";
+import OnboardingPage from "./pages/landing/onboarding/page";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           </AppLayout>
         }
       />
+      <Route path="/onboarding" element={<OnboardingPage />} />
     </Routes>
   );
 }

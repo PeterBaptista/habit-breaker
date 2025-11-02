@@ -1,4 +1,5 @@
-import { app, BrowserWindow, Menu } from "electron";
+import { app, BrowserWindow, ipcMain } from "electron"; // 1. Import ipcMain
+import Store from "electron-store"; // 2. Import electron-store
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -26,32 +27,48 @@ process.env.VITE_PUBLIC = VITE_DEV_SERVER_URL
 
 let win: BrowserWindow | null;
 
+// Initialize the store
+const store = new Store();
+
 function createWindow() {
   win = new BrowserWindow({
     icon: path.join(process.env.VITE_PUBLIC, "electron-vite.svg"),
+    width: 1200,
+    height: 1200,
     webPreferences: {
       preload: path.join(__dirname, "preload.mjs"),
+      // Note: contextIsolation and sandbox are true by default and recommended.
     },
   });
 
-  Menu.setApplicationMenu(null);
+  // Menu.setApplicationMenu(null);
 
-  // Test active push message to Renderer-process.
   win.webContents.on("did-finish-load", () => {
     win?.webContents.send("main-process-message", new Date().toLocaleString());
   });
 
+  // --- START OF ONBOARDING LOGIC ---
+
+  // 1. Check if the user has completed onboarding. Default to false.
+  const hasOnboarded = store.get("hasOnboarded", false);
+
   if (VITE_DEV_SERVER_URL) {
-    win.loadURL(VITE_DEV_SERVER_URL);
+    let url = VITE_DEV_SERVER_URL;
+    // If not onboarded, append the onboarding hash route
+    if (!hasOnboarded) {
+      url += "#/onboarding";
+    }
+    win.loadURL(url);
   } else {
-    // win.loadFile('dist/index.html')
-    win.loadFile(path.join(RENDERER_DIST, "index.html"));
+    // For production, use the 'hash' option in loadFile
+    win.loadFile(path.join(RENDERER_DIST, "index.html"), {
+      hash: hasOnboarded ? undefined : "onboarding", // This will append '#/onboarding'
+    });
   }
+  // --- END OF ONBOARDING LOGIC ---
 }
 
-// Quit when all windows are closed, except on macOS. There, it's common
-// for applications and their menu bar to stay active until the user quits
-// explicitly with Cmd + Q.
+// ... (app.on 'window-all-closed' and 'activate'...)
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {
     app.quit();
@@ -60,11 +77,14 @@ app.on("window-all-closed", () => {
 });
 
 app.on("activate", () => {
-  // On OS X it's common to re-create a window in the app when the
-  // dock icon is clicked and there are no other windows open.
   if (BrowserWindow.getAllWindows().length === 0) {
     createWindow();
   }
+});
+
+// Listen for the "I'm done" signal from the renderer
+ipcMain.on("onboarding-complete", () => {
+  store.set("hasOnboarded", true);
 });
 
 app.whenReady().then(createWindow);
