@@ -11,6 +11,7 @@ import { motion } from "framer-motion";
 import type { Habit } from "@/lib/store";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface HabitCalendarProps {
   habit: Habit;
@@ -78,24 +79,20 @@ export function HabitCalendar({ habit, onToggleDay }: HabitCalendarProps) {
               className="relative aspect-square"
             >
               <div
-                className={`
-                  h-full w-full rounded-lg flex items-center justify-center text-sm font-medium
-                  transition-all duration-200
-                  ${
-                    !isCurrentMonth
-                      ? "opacity-30 cursor-default"
-                      : "cursor-pointer"
+                className={cn(
+                  ` h-full w-full rounded-lg flex items-center justify-center text-sm font-medium  transition-all duration-200`,
+                  {
+                    "opacity-30 cursor-default": !isCurrentMonth,
+                    "cursor-pointer": isCurrentMonth,
+                    " text-white ": isCompleted,
+
+                    "text-muted-foreground": !isCompleted,
+                    "bg-muted text-muted-foreground hover:bg-muted/80":
+                      !isCompleted,
+                    "ring-4 ring-foreground": isTodayDate,
                   }
-                  ${
-                    isCompleted
-                      ? "text-white"
-                      : "bg-muted text-muted-foreground hover:bg-muted/80"
-                  }
-                  ${isTodayDate && !isCompleted ? "ring-2 ring-primary" : ""}
-                `}
-                style={{
-                  backgroundColor: isCompleted ? habit.color : undefined,
-                }}
+                )}
+                style={{ backgroundColor: isCompleted ? habit.color : "" }}
               >
                 {format(day, "d")}
               </div>
