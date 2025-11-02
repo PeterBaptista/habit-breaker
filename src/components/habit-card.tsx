@@ -2,10 +2,10 @@
 
 import { motion } from "framer-motion";
 import { type Habit, useHabitStore } from "@/lib/store";
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { Card } from "./ui/card";
+import { Button } from "./ui/button";
 import { Trash2, Pencil } from "lucide-react";
-import { HabitCalendar } from "@/components/habit-calendar";
+import { HabitCalendar } from "./habit-calendar";
 
 interface HabitCardProps {
   habit: Habit;
