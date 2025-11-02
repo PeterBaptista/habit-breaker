@@ -105,7 +105,7 @@ export function OnboardingStep1({ onNext, direction }: OnboardingStep1Props) {
               title: "See Results",
               desc: "Visualize your success over time",
             },
-          ].map((feature, index) => (
+          ].map((feature) => (
             <motion.div
               key={feature.title}
               variants={cardVariants}

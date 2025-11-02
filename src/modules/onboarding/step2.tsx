@@ -109,7 +109,7 @@ export function OnboardingStep2({
 
         {/* Steps */}
         <div className="space-y-6 pt-4">
-          {steps.map((step, index) => {
+          {steps.map((step) => {
             const Icon = step.icon;
             return (
               <motion.div
